@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/WorkoutList">
+
+    <fragment
+        android:id="@+id/WorkoutList"
+        android:name="com.example.workout.presentation.ui.workoutlist.WorkoutList"
+        android:label="Список тренировок"
+        tools:layout="@layout/fragment_workout_list">
+        <action
+            android:id="@+id/action_WorkoutList_to_WorkoutDetails"
+            app:destination="@id/WorkoutDetails" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/WorkoutDetails"
+        android:name="com.example.workout.presentation.ui.workoutdetails.WorkoutDetails"
+        android:label="Детали"
+        tools:layout="@layout/fragment_workout_details">
+        <argument
+            android:name="workout"
+            app:argType="com.example.workout.domain.interactors.workouts.Workout" />
+    </fragment>
+</navigation>
