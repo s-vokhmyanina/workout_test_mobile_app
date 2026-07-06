@@ -1,6 +1,5 @@
 package com.example.workout.presentation.ui.workoutlist
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.workout.domain.common.Response
@@ -8,6 +7,7 @@ import com.example.workout.domain.interactors.workouts.Workout
 import com.example.workout.domain.interactors.workouts.WorkoutListInteractor
 import com.example.workout.domain.models.workout.WorkoutType
 import com.example.workout.presentation.ui.BaseConfiguration
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -87,14 +87,13 @@ class WorkoutListViewModel(
         )
     }
 
-
     private fun loadWorkouts() {
-        viewModelScope.launch {
-            _state.value = _state.value.copy(
-                configuration = BaseConfiguration.LOADING,
-                error = null
-            )
+        _state.value = _state.value.copy(
+            configuration = BaseConfiguration.LOADING,
+            error = null
+        )
 
+        viewModelScope.launch(Dispatchers.IO) {
             when (val response = workoutListInteractor.getWorkouts()) {
                 is Response.Success -> {
                     allWorkouts.value = response.value
